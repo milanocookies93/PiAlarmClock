@@ -8,12 +8,17 @@ import urllib
 import json
 from datetime import datetime
 import os
+from twilio.rest import TwilioRestClient
 
 from apiclient.discovery import build
 from httplib2 import Http
 import oauth2client
 from oauth2client import client
 from oauth2client import tools
+
+account = "AC5bc10b06dfef6a0d19cfef184406cd74" 
+token = "c7fb839a2ebd320b392654eaa01cb22a"
+client = TwilioRestClient(account, token)
 
 alarmone = 8
 alarmtwo = 7
@@ -123,16 +128,14 @@ while True:
 	time.sleep(60)
 
 flag = 1
-
+message = client.messages.create(to="+16309950526", from_="+13313056100",body= "Rainbow Unicorn Ninja wants you to wake up! https://myspideysenseistingling.files.wordpress.com/2011/09/behold_a_rainbow_unicorn_ninja_by_jess4921.jpg?w=1017&h=624")
 while True:
 
 	if flag == 1:
 		cleansig()
 		GPIO.output(alarmone,True)
-#		GPIO.output(alarmtwo,True)
 		time.sleep(0.001)
 		GPIO.output(alarmone,False)
-#		GPIO.output(alarmtwo,False)
 		time.sleep(0.001)	
 	if GPIO.input(buttonoff) == False:
 		flag = 0
